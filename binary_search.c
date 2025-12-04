@@ -7,7 +7,7 @@ int BinarySearch(int a[],int n,int key) ;
 
 int main()
 {
-    int    num[2000000] ; //这个数组比较大，如果在你的电脑中无法分配这么大的内存，请改小后测试。
+    int    num[20000] ; //这个数组比较大，如果在你的电脑中无法分配这么大的内存，请改小后测试。
     int        n , m, i;    
     int        key ;
     
@@ -31,7 +31,7 @@ int BinarySearch(int a[],int n,int key)
     int high = n - 1 ;
     while( low <= high)
     {
-        int mid = (low + high) / 2 ;
+        int mid = low + (high - low) / 2;  //防止溢出
         if( a[mid] == key)
         {
             return mid ;
