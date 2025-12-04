@@ -7,7 +7,7 @@ void outputData(int data[],int elementCount) ;
 int main()
 {
     int        n , i,    num[1010] ;
-
+//here we read the number of elements and the elements themselves
     scanf("%d",&n);
     for( i = 0 ; i < n ; i++ )
         scanf("%d",&num[i]) ;
