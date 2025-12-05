@@ -6,7 +6,6 @@ void reversePrint(char str[]) ;
 int main()
 {
     char    s[100] ;
-    
     scanf( "%s" , s );    
     reversePrint(s) ;
     printf("\n") ;
@@ -16,7 +15,7 @@ int main()
 
 void reversePrint(char str[])
 {
-    if( *str != "\0")
+    if( *str != '\0')
     {
         reversePrint( str + 1);
         printf("%c", *str);
