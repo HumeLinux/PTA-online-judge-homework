@@ -25,7 +25,7 @@ int main()
     for( i = 0 ; i < m - 1 ; i++ )
         printf( "%d " , x[i] ) ;
     printf( "%d\n" , x[i] ) ;
-    
+    system("pause");
     return 0 ;
 }
 
