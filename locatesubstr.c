@@ -21,22 +21,23 @@ char *locatesubstr(char *str1,char *str2)
     char *p1,*p2,*p;
     p1 = str1;
     p2 = str2;
-    while(*p1 != '/0')
+    while(*p1 != '\0')
     {
         p = p1;
-        while(*p2 != '/0' && *p == *p2)
+        while(*p2 != '\0' && *p == *p2)
         {
             p++;
             p2++;
         }
-        if(*p2 == '/0')
+        
+        if(*p2 == '\0')
             return p1;
         else
-            {
-                p2 = str2;
-                p++;
-                p1 = p;
-            }
+        {
+            p2 = str2;
+            p1++;
+        }
     }
     return NULL;
+    
 }
