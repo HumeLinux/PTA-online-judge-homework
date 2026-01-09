@@ -1,84 +1,57 @@
-#include<stdio.h>
-#include<stdlib.h>
-
-char ** create1(int n) ;
-void create2( char ** strPtr , int n ) ;
-void fill(char ** strPtr , int n) ;
-
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 int main()
 {
-    int        n, i;
-    char**    strPtr ;
+    int n, i, j;
+    if(scanf("%d", &n) != 1)
+        return 1;
+    getchar();
 
-    scanf("%d", &n );
-    strPtr = create1( n * 2 + 1 ) ;
-    create2( strPtr ,  n * 2 + 1 ) ;
-    fill(strPtr , n) ;
+    char **strPtr = (char **)malloc(n * sizeof(char *));
+    char buffer[1000];
 
-    for (i = 0; i < 2 * n + 1; i++)
+    for(i = 0; i < n; i++)
     {
-        printf("%s\n" , strPtr[i]);
+        if(fgets(buffer, sizeof(buffer), stdin) != NULL)
+        {
+            size_t len = strlen(buffer);
+            if(len > 0 &&buffer[len - 1] == '\n')
+            {
+                buffer[len - 1] = '\0';
+                len--;
+            }
+        }
+        strPtr[i] = (char *)malloc((strlen(buffer) + 1) * sizeof(char));
+        if(strPtr[i] != NULL)
+        {
+            strcpy(strPtr[i], buffer);
+        }
     }
-    
-    for ( i = 0 ; i < n * 2 + 1 ; i++ )
-        free(strPtr[i]) ;
-    free(strPtr) ;
 
+    char *temp;
+    for(i = 0; i < n - 1; i++)
+    {
+        for(j = 0; j < n - i -1; j++)
+        {
+            if(strcmp(strPtr[j],strPtr[j + 1]) > 0)
+            {
+                temp = strPtr[j];
+                strPtr[j] = strPtr[j + 1];
+                strPtr[j + 1] = temp;
+            }
+        }
+    }
+
+    for(i = 0; i < n; i++)
+    {
+        printf("%s\n", strPtr[i]);
+    }
+    for(i = 0; i < n; i++)
+    {
+        free(strPtr[i]);
+    }
+    free(strPtr);
     return 0;
-}
-
-char ** create1(int n)
-{
-    char ** strPtr;
-    strPtr = (char **)malloc(n * sizeof(char *));
-    return strPtr;
-}
-void create2( char ** strPtr , int n )
-{
-    for(int i = 0; i < n; i++)
-        {
-            strPtr[i] = (char *)malloc((n+1) * sizeof(char));
-        }
-}
-
-void fill(char ** strPtr , int n)
-{
-    int rows = 2*n+1, cols = 2*n+1;
-    int center = n;
-    for(int i = 0; i < rows; i++)
-    {
-        for(int j = 0; j < cols; j++)
-        {
-            strPtr[i][j] = ' ';
-        }
-        strPtr[i][cols] = '\0';
-    }
-
-    for(int i = 0; i < rows; i++)
-    {
-        if(i == 0)
-            strPtr[i][center] = 'X';
-        else if(i < n)
-        {
-            int left = center - i;
-            int right = center + i;
-            strPtr[i][left] = '/';
-            strPtr[i][right] = '\\';
-        }
-        else if(i == n)
-        {
-            strPtr[i][0] = 'X';
-            strPtr[i][cols - 1] = 'X';
-        }
-        else if(i > n && i < rows - 1)
-        {
-            int left = center - (rows - 1 - i);  //倒三角
-            int right = center + (rows - 1 - i);
-            strPtr[i][left] = '\\';
-            strPtr[i][right] = '/';
-        }
-        else if(i == rows - 1)
-            strPtr[i][center] = 'X';
-    }
 }
